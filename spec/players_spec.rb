@@ -13,6 +13,7 @@ RSpec.describe Players do
       name = 'player1'
       allow(player_name).to receive(:gets).and_return(name)
       allow(player_name).to receive(:puts)
+      allow(player_name).to receive(:choose_color)
     end
 
     it "will store player's name" do
@@ -21,11 +22,12 @@ RSpec.describe Players do
     end
   end
 
-  describe '#receive_player1_name' do
+  describe '#receive_player2_name' do
     before do
       name = 'player2'
       allow(player_name).to receive(:gets).and_return(name)
       allow(player_name).to receive(:puts)
+      allow(player_name).to receive(:choose_color)
     end
 
     it "will store player's name" do

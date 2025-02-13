@@ -11,14 +11,22 @@ class Players
     @chosen_moves = []
   end
 
+  def receive_players_data
+    receive_player1_name
+    receive_player2_name
+
+  end
+
   def receive_player1_name
     puts 'Enter your name player 1'.bold
     game_players << gets.chomp # player name
+    choose_color
   end
 
   def receive_player2_name
     puts 'Enter your name player 2'.bold
     game_players << gets.chomp # player name
+    choose_color
   end
 
   def choose_color
@@ -41,5 +49,9 @@ class Players
       color = gets.chomp
     end
     return @available_colors.delete(color)
+  end
+
+  def show_players_details
+    puts "The players #{@game_players} have entered the game"
   end
 end
