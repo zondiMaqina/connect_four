@@ -6,6 +6,7 @@ require_relative '../lib/players_data/players'
 RSpec.describe Players do
   # #initialze => assigns objects to vars
   # #show_colors => only prints
+  # show_players_details => prints data
   subject(:player_name) { described_class.new }
 
   describe '#receive_player1_name' do
