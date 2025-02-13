@@ -1,4 +1,4 @@
-#frozen_string_literal: true
+# frozen_string_literal: true
 require 'terminal-table'
 
 # class for game's board
