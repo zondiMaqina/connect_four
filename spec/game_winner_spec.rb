@@ -43,4 +43,38 @@ RSpec.describe GameWinner do
       end
     end
   end
+
+  describe '#search_left' do
+    context 'when player has 4 connected  moves to left' do
+      before do
+        y_played_moves = [1, 2, 3, 4]
+        y_played_moves.each do |y|
+          game_board[0][y] = player_move
+        end
+      end
+
+      it 'will make player win' do
+        move = '04'
+        expect(game_win).to receive(:player_wins)
+        game_win.search_left(game_board, move)
+      end
+    end
+  end
+
+  describe '#searh_right' do
+    context 'when player has 4 connected moves to right' do
+      before do
+        y_played_moves = [1, 2, 3, 4]
+        y_played_moves.each do |y|
+          game_board[0][y] = player_move
+        end
+      end
+
+      it ' will make player win' do
+        move = '01'
+        expect(game_win).to receive(:player_wins)
+        game_win.search_right(game_board, move)
+      end
+    end
+  end
 end
