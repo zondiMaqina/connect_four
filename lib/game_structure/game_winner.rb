@@ -6,13 +6,26 @@ class GameWinner
     @player_attempts = []
   end
 
-  def search_up(board, player_move)
+  def search_down(board, player_move)
     x = player_move[0].to_i
     y = player_move[1].to_i
     move = board[x][y]
     until index_valid?(board, x, y, move)
       @player_attempts << board[x][y] if matches?(board[x][y], move)
       x += 1
+    end
+    return player_wins(move) if @player_attempts.size >= 4
+
+    clear_attempts
+  end
+
+  def search_up(board, player_move)
+    x = player_move[0].to_i
+    y = player_move[1].to_i
+    move = board[x][y]
+    until index_valid?(board, x, y, move)
+      @player_attempts << board[x][y] if matches?(board[x][y], move)
+      x -= 1
     end
     return player_wins(move) if @player_attempts.size >= 4
 
