@@ -98,12 +98,14 @@ RSpec.describe GameWinner do
   describe '#search_digonally_right_down' do
     context 'when player has 4 moves connected diagonally' do
       before do
+        played_moves = [0, 1, 2, 3, 4]
+        played_moves.each { |move| game_board[move][move] = player_move }
       end
 
-      xit 'will make player win' do
-        move =
-          expect(game_win).to receive(:player_wins)
-        game_win.search_digonally_right_down(board, move)
+      it 'will make player win' do
+        move = '00'
+        expect(game_win).to receive(:player_wins)
+        game_win.search_diagonally_right_down(game_board, move)
       end
     end
   end
@@ -111,12 +113,14 @@ RSpec.describe GameWinner do
   describe '#search_digonally_left_up' do
     context 'when player has 4 moves connected diagonally' do
       before do
+        played_moves = [4, 3, 2, 1]
+        played_moves.each { |move| game_board[move][move] = player_move }
       end
 
-      xit 'will make player win' do
-        move =
-          expect(game_win).to receive(:player_wins)
-        game_win.search_digonally_left_up(board, move)
+      it 'will make player win' do
+        move = '44'
+        expect(game_win).to receive(:player_wins)
+        game_win.search_diagonally_left_up(game_board, move)
       end
     end
   end
@@ -124,12 +128,17 @@ RSpec.describe GameWinner do
   describe '#search_digonally_left_down' do
     context 'when player has 4 moves connected diagonally' do
       before do
+        y_moves = [4, 3, 2, 1]
+        x_moves = [0, 1, 2, 3]
+        x_moves.each do |move|
+          game_board[move][y_moves[move]] = player_move
+        end
       end
 
-      xit 'will make player win' do
-        move =
-          expect(game_win).to receive(:player_wins)
-        game_win.search_digonally_left_down(board, move)
+      it 'will make player win' do
+        move = '04'
+        expect(game_win).to receive(:player_wins)
+        game_win.search_diagonally_left_down(game_board, move)
       end
     end
   end
