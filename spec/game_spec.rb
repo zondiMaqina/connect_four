@@ -120,7 +120,6 @@ RSpec.describe Game do
   describe '#adjust_move' do
     context 'when valid move is on top of empty position' do
       it 'will be adjusted to lowest valid position' do
-        
       end
     end
   end
