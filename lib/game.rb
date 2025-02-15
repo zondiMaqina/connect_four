@@ -38,11 +38,15 @@ class Game < GameWinner
   end
 
   def verify_move(input, move_icon)
-    if move_valid?(input) && move_appropriate?(input)
-      adjust_move(input, move_icon)
-    else
-      try_again(input)
-    end
+    adjust_move(input, move_icon) if valid?(input)
+
+    try_again(input)
+  end
+
+  def valid?(input)
+    x = input[0].to_i
+    y = input[1].to_i
+    move_valid?(input) && move_appropriate?(input) && current_move_empty?(x, y)
   end
 
   def move_valid?(input)
@@ -58,7 +62,7 @@ class Game < GameWinner
   end
 
   def try_again(input)
-    until move_valid?(input) && move_appropriate?(input)
+    until move_valid?(input) && move_appropriate?(input) && current_move_empty?(input[0].to_i, input[1].to_i)
       puts 'Try again move invalid'.colorize(:red)
       input = gets.chomp
     end
@@ -68,13 +72,9 @@ class Game < GameWinner
   def adjust_move(input, move_icon)
     x = input[0].to_i
     y = input[1].to_i
-    loop do
-      break if board[x].nil?
-
-      x += 1
-      return x if current_move_empty?(x, y)
-    end
-    board.game_board[x + 1][y] = move_icon
+    x += 1 while x < 5
+    x -= 1 until current_move_empty?(x, y)
+    board.game_board[x][y] = move_icon
     updated_move(x, y, input)
     [x, y]
   end

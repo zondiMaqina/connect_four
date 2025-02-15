@@ -120,6 +120,29 @@ RSpec.describe Game do
   describe '#adjust_move' do
     context 'when valid move is on top of empty position' do
       it 'will be adjusted to lowest valid position' do
+        input = [0, 2]
+        adjusted_move = [5, 2]
+        result = player_input.adjust_move(input, player_move)
+        expect(result).to eql(adjusted_move)
+      end
+    end
+
+    let(:board) { double('GameBoard') }
+    let(:game_board) { Array.new(6) { Array.new(7, ' ') } }
+
+    context 'when the destination of move is occupied' do
+      before do
+        game_board[5][2] = player_move
+        allow(player_input).to receive(:board).and_return(board)
+        allow(board).to receive(:game_board).and_return(game_board)
+        allow(player_input).to receive(:updated_move)
+      end
+
+      it 'will be adjusted on top of occupied position' do
+        input = [0, 2]
+        adjusted_move = [4, 2]
+        result = player_input.adjust_move(input, player_move)
+        expect(result).to eql(adjusted_move)
       end
     end
   end
