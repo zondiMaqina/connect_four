@@ -62,7 +62,7 @@ class Game < GameWinner
       puts 'Try again move invalid'.colorize(:red)
       input = gets.chomp
     end
-    [input[0], input[1]]
+    [input[0].to_i, input[1].to_i]
   end
 
   def adjust_move(input, move_icon)

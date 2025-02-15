@@ -88,5 +88,40 @@ RSpec.describe Game do
   end
 
   describe '#try_again' do
+    context 'when input is valid' do
+      before do
+        allow(player_input).to receive(:move_valid?).and_return(true)
+        allow(player_input).to receive(:move_appropriate?).and_return(true)
+      end
+
+      it 'will return the move' do
+        move = '50'
+        converted_move = [5, 0]
+        result = player_input.try_again(move)
+        expect(result).to eql(converted_move)
+      end
+    end
+  end
+
+  describe '#try_again' do
+    context 'when input is invalid' do
+      before do
+        allow(player_input).to receive(:gets).and_return('50')
+      end
+
+      it 'will ask player to enter move again' do
+        invalid_move = '80'
+        expect(player_input).to receive(:puts).once
+        player_input.try_again(invalid_move)
+      end
+    end
+  end
+
+  describe '#adjust_move' do
+    context 'when valid move is on top of empty position' do
+      it 'will be adjusted to lowest valid position' do
+        
+      end
+    end
   end
 end
