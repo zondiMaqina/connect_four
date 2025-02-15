@@ -1,10 +1,13 @@
 # frozen_string_literal: true
+
 require 'terminal-table'
 
 # class for game's board
 class GameBoard
+  attr_reader :game_board
+
   def initialize
-    @game_board = Array.new(6) { Array.new(7, ' ')}
+    @game_board = Array.new(6) { Array.new(7, ' ') }
     @columns = [' ', 0, 1, 2, 3, 4, 5, 6]
   end
 
