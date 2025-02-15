@@ -18,7 +18,7 @@ class GameWinner
     x = player_move[0].to_i
     y = player_move[1].to_i
     move = board[x][y]
-    until index_valid?(board, x, y, move)
+    until index_valid?(x, y)
       @player_attempts << board[x][y] if matches?(board[x][y], move)
       x += 1
     end
@@ -32,7 +32,7 @@ class GameWinner
     x = player_move[0].to_i
     y = player_move[1].to_i
     move = board[x][y]
-    until index_valid?(board, x, y, move)
+    until index_valid?(x, y)
       @player_attempts << board[x][y] if matches?(board[x][y], move)
       x -= 1
     end
@@ -46,7 +46,7 @@ class GameWinner
     x = player_move[0].to_i
     y = player_move[1].to_i
     move = board[x][y]
-    until index_valid?(board, x, y, move)
+    until index_valid?(x, y)
       @player_attempts << board[x][y] if matches?(board[x][y], move)
       y -= 1
     end
@@ -60,7 +60,7 @@ class GameWinner
     x = player_move[0].to_i
     y = player_move[1].to_i
     move = board[x][y]
-    until index_valid?(board, x, y, move)
+    until index_valid?(x, y)
       @player_attempts << board[x][y] if matches?(board[x][y], move)
       y += 1
     end
@@ -74,7 +74,7 @@ class GameWinner
     x = player_move[0].to_i
     y = player_move[1].to_i
     move = board[x][y]
-    until index_valid?(board, x, y, move)
+    until index_valid?(x, y)
       @player_attempts << board[x][y] if matches?(board[x][y], move)
       x -= 1
       y += 1
@@ -89,7 +89,7 @@ class GameWinner
     x = player_move[0].to_i
     y = player_move[1].to_i
     move = board[x][y]
-    until index_valid?(board, x, y, move)
+    until index_valid?(x, y)
       @player_attempts << board[x][y] if matches?(board[x][y], move)
       x += 1
       y += 1
@@ -104,7 +104,7 @@ class GameWinner
     x = player_move[0].to_i
     y = player_move[1].to_i
     move = board[x][y]
-    until index_valid?(board, x, y, move)
+    until index_valid?(x, y)
       @player_attempts << board[x][y] if matches?(board[x][y], move)
       x -= 1
       y -= 1
@@ -119,7 +119,7 @@ class GameWinner
     x = player_move[0].to_i
     y = player_move[1].to_i
     move = board[x][y]
-    until index_valid?(board, x, y, move)
+    until index_valid?(x, y)
       @player_attempts << board[x][y] if matches?(board[x][y], move)
       x += 1
       y -= 1
@@ -129,8 +129,8 @@ class GameWinner
     clear_attempts
   end
 
-  def index_valid?(board, x, y, move)
-    x.negative? || y.negative? || board[x].nil? || board[y].nil?
+  def index_valid?(x, y)
+    x.negative? || y.negative? || x > 5 || y > 6
   end
 
   def matches?(current_position, player_move)
@@ -148,7 +148,7 @@ class GameWinner
 
   def board_full?(board)
     board.all? do |row|
-      row.include?(' ') == true
+      row.include?(' ') == false
     end
   end
 
