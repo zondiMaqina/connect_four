@@ -6,8 +6,9 @@ class GameWinner
     @player_attempts = []
   end
 
-  def search_win(board, player_moves)
-    player_moves.each do |move|
+  def search_win(board, player_moves, move_icon)
+    @chosen_move = move_icon
+    player_moves.reverse.each do |move|
       search_down(board, move)
     end
 
@@ -17,12 +18,11 @@ class GameWinner
   def search_down(board, player_move)
     x = player_move[0].to_i
     y = player_move[1].to_i
-    move = board[x][y]
     until index_valid?(x, y)
-      @player_attempts << board[x][y] if matches?(board[x][y], move)
+      @player_attempts << @chosen_move if matches?(board[x][y], @chosen_move)
       x += 1
     end
-    return player_wins(move) if @player_attempts.size >= 4
+    return player_wins(@chosen_move) if @player_attempts.size >= 4
 
     clear_attempts
     search_up(board, player_move)
@@ -31,12 +31,11 @@ class GameWinner
   def search_up(board, player_move)
     x = player_move[0].to_i
     y = player_move[1].to_i
-    move = board[x][y]
     until index_valid?(x, y)
-      @player_attempts << board[x][y] if matches?(board[x][y], move)
+      @player_attempts << @chosen_move if matches?(board[x][y], @chosen_move)
       x -= 1
     end
-    return player_wins(move) if @player_attempts.size >= 4
+    return player_wins(@chosen_move) if @player_attempts.size >= 4
 
     clear_attempts
     search_left(board, player_move)
@@ -45,12 +44,11 @@ class GameWinner
   def search_left(board, player_move)
     x = player_move[0].to_i
     y = player_move[1].to_i
-    move = board[x][y]
     until index_valid?(x, y)
-      @player_attempts << board[x][y] if matches?(board[x][y], move)
+      @player_attempts << @chosen_move if matches?(board[x][y], @chosen_move)
       y -= 1
     end
-    return player_wins(move) if @player_attempts.size >= 4
+    return player_wins(@chosen_move) if @player_attempts.size >= 4
 
     clear_attempts
     search_right(board, player_move)
@@ -59,12 +57,11 @@ class GameWinner
   def search_right(board, player_move)
     x = player_move[0].to_i
     y = player_move[1].to_i
-    move = board[x][y]
     until index_valid?(x, y)
-      @player_attempts << board[x][y] if matches?(board[x][y], move)
+      @player_attempts << @chosen_move if matches?(board[x][y], @chosen_move)
       y += 1
     end
-    return player_wins(move) if @player_attempts.size >= 4
+    return player_wins(@chosen_move) if @player_attempts.size >= 4
 
     clear_attempts
     search_diagonally_right_up(board, player_move)
@@ -73,13 +70,12 @@ class GameWinner
   def search_diagonally_right_up(board, player_move)
     x = player_move[0].to_i
     y = player_move[1].to_i
-    move = board[x][y]
     until index_valid?(x, y)
-      @player_attempts << board[x][y] if matches?(board[x][y], move)
+      @player_attempts << @chosen_move if matches?(board[x][y], @chosen_move)
       x -= 1
       y += 1
     end
-    return player_wins(move) if @player_attempts.size >= 4
+    return player_wins(@chosen_move) if @player_attempts.size >= 4
 
     clear_attempts
     search_diagonally_right_down(board, player_move)
@@ -88,13 +84,12 @@ class GameWinner
   def search_diagonally_right_down(board, player_move)
     x = player_move[0].to_i
     y = player_move[1].to_i
-    move = board[x][y]
     until index_valid?(x, y)
-      @player_attempts << board[x][y] if matches?(board[x][y], move)
+      @player_attempts << @chosen_move if matches?(board[x][y], @chosen_move)
       x += 1
       y += 1
     end
-    return player_wins(move) if @player_attempts.size >= 4
+    return player_wins(@chosen_move) if @player_attempts.size >= 4
 
     clear_attempts
     search_diagonally_left_up(board, player_move)
@@ -103,13 +98,12 @@ class GameWinner
   def search_diagonally_left_up(board, player_move)
     x = player_move[0].to_i
     y = player_move[1].to_i
-    move = board[x][y]
     until index_valid?(x, y)
-      @player_attempts << board[x][y] if matches?(board[x][y], move)
+      @player_attempts << @chosen_move if matches?(board[x][y], @chosen_move)
       x -= 1
       y -= 1
     end
-    return player_wins(move) if @player_attempts.size >= 4
+    return player_wins(@chosen_move) if @player_attempts.size >= 4
 
     clear_attempts
     search_diagonally_left_down(board, player_move)
@@ -118,13 +112,12 @@ class GameWinner
   def search_diagonally_left_down(board, player_move)
     x = player_move[0].to_i
     y = player_move[1].to_i
-    move = board[x][y]
     until index_valid?(x, y)
-      @player_attempts << board[x][y] if matches?(board[x][y], move)
+      @player_attempts << @chosen_move if matches?(board[x][y], @chosen_move)
       x += 1
       y -= 1
     end
-    return player_wins(move) if @player_attempts.size >= 4
+    return player_wins(@chosen_move) if @player_attempts.size >= 4
 
     clear_attempts
   end
@@ -142,7 +135,7 @@ class GameWinner
   end
 
   def player_wins(move)
-    puts "#{move} wins".colorize(:green)
+    puts "#{move} wins"
     exit
   end
 
