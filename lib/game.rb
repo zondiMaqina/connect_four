@@ -20,12 +20,11 @@ class Game < GameWinner
 
   def play_game
     show_rules
+    board.print_game_board
     players_data.receive_players_data
     loop do
       play_player1
-      board.print_game_board
       play_player2
-      board.print_game_board
     end
   end
 
@@ -33,14 +32,16 @@ class Game < GameWinner
     puts "Enter move #{players_data.game_players[0]}".colorize(:green)
     move_icon = players_data.chosen_moves[0]
     @player_one_moves << verify_move(gets.chomp, move_icon)
-    search_win(board.game_board, @player_one_moves, move_icon) if @player_one_moves.size >= 4
+    board.print_game_board
+    search_win(board.game_board, @player_one_moves, move_icon)
   end
 
   def play_player2
     puts "Enter move #{players_data.game_players[1]}".colorize(:green)
     move_icon = players_data.chosen_moves[1]
     @player_two_moves << verify_move(gets.chomp, move_icon)
-    search_win(board.game_board, @player_two_moves, move_icon) if @player_two_moves.size >= 4
+    board.print_game_board
+    search_win(board.game_board, @player_two_moves, move_icon)
   end
 
   def verify_move(input, move_icon)
@@ -79,7 +80,7 @@ class Game < GameWinner
   def adjust_move(input, move_icon)
     x = input[0].to_i
     y = input[1].to_i
-    x += 1 while x < 5
+    x += 1 until board.game_board[x + 1].nil?
     x -= 1 until current_move_empty?(x, y)
     board.game_board[x][y] = move_icon
     updated_move(x, y, input)
