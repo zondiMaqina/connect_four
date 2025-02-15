@@ -6,19 +6,85 @@ require_relative 'players_data/players'
 
 # class for handling players' input
 class Game < GameWinner
-  attr_reader :game_board, :players_data
+  attr_reader :board, :players_data, :player_one_moves, :player_two_moves
 
   def initialize
     super
-    @game_board = GameBoard.new
+    @board = GameBoard.new
     @players_data = Players.new
     @player_one_moves = []
     @player_two_moves = []
   end
 
-  def start_game
+  def play_game
     players_data.receive_players_data
     show_rules
+    loop do
+      play_player1
+      play_player2
+    end
+  end
+
+  def play_player1
+    puts "Enter move #{players_data.game_players[0]}"
+    move_icon = players_data.chosen_moves[0]
+    @player_one_moves << verify_move(gets.chomp, move_icon)
+  end
+
+  def play_player2
+    puts "Enter move #{players_data.game_players[0]}"
+    move_icon = players_data.chosen_moves[1]
+    @player_two_moves << verify_move(gets.chomp, move_icon)
+  end
+
+  def verify_move(input, move_icon)
+    if move_valid?(input) && move_appropriate?(input)
+      adjust_move(input, move_icon)
+    else
+      try_again(input)
+    end
+  end
+
+  def move_valid?(input)
+    return false if input.size > 2 || input.size < 2
+
+    input[0].to_i.to_s == input[0] && input[1].to_i.to_s == input[1]
+  end
+
+  def move_appropriate?(input)
+    x = input[0].to_i
+    y = input[1].to_i
+    x <= 5 && y <= 6
+  end
+
+  def try_again(input)
+    until move_valid?(input) && move_appropriate?(input)
+      puts 'Try again move invalid'.colorize(:red)
+      input = gets.chomp
+    end
+    [input[0], input[1]]
+  end
+
+  def adjust_move(input, move_icon)
+    x = input[0].to_i
+    y = input[1].to_i
+    loop do
+      break if board[x].nil?
+
+      x += 1
+      return x if current_move_empty?(x, y)
+    end
+    board.game_board[x + 1][y] = move_icon
+    updated_move(x, y, input)
+    [x, y]
+  end
+
+  def current_move_empty?(x, y)
+    board.game_board[x][y].match(' ')
+  end
+
+  def updated_move(x, y, input)
+    puts "move adjusted from #{[input[0].to_i, input[1].to_i]} to #{[x, y]}"
   end
 
   def show_rules
