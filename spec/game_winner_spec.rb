@@ -142,4 +142,15 @@ RSpec.describe GameWinner do
       end
     end
   end
+
+  describe '#board_full' do
+    let(:full_board) { Array.new(6) { Array.new(7, "\u25A0") } }
+    subject(:game_over) { described_class.new }
+
+    context 'when board is full' do
+      it 'will end game' do
+        expect(game_over).to be_board_full(full_board)
+      end
+    end
+  end
 end
