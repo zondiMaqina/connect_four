@@ -4,6 +4,8 @@ require_relative 'game_structure/game_winner'
 require_relative 'game_structure/game_board'
 require_relative 'players_data/players'
 
+require 'colorize'
+
 # class for handling players' input
 class Game < GameWinner
   attr_reader :board, :players_data, :player_one_moves, :player_two_moves
@@ -17,8 +19,8 @@ class Game < GameWinner
   end
 
   def play_game
-    players_data.receive_players_data
     show_rules
+    players_data.receive_players_data
     loop do
       play_player1
       board.print_game_board
@@ -28,23 +30,24 @@ class Game < GameWinner
   end
 
   def play_player1
-    puts "Enter move #{players_data.game_players[0]}"
+    puts "Enter move #{players_data.game_players[0]}".colorize(:green)
     move_icon = players_data.chosen_moves[0]
     @player_one_moves << verify_move(gets.chomp, move_icon)
-    search_win(board.game_board, @player_one_moves) if @player_one_moves.size >= 4
+    search_win(board.game_board, @player_one_moves, move_icon) if @player_one_moves.size >= 4
   end
 
   def play_player2
-    puts "Enter move #{players_data.game_players[0]}"
+    puts "Enter move #{players_data.game_players[1]}".colorize(:green)
     move_icon = players_data.chosen_moves[1]
     @player_two_moves << verify_move(gets.chomp, move_icon)
-    search_win(board.game_board, @player_two_moves) if @player_two_moves.size >= 4
+    search_win(board.game_board, @player_two_moves, move_icon) if @player_two_moves.size >= 4
   end
 
   def verify_move(input, move_icon)
-    adjust_move(input, move_icon) if valid?(input)
+    return adjust_move(input, move_icon) if valid?(input)
 
-    try_again(input)
+    corrected_move = try_again(input)
+    adjust_move(corrected_move, move_icon)
   end
 
   def valid?(input)
@@ -95,7 +98,8 @@ class Game < GameWinner
     puts <<-HEREDOC
       CONNECT_FOUR
       -------------------------------
-      Welcome to the connect_four game !!! to play game,simply connect four moves on the board that will show by playing on the position on the board using 'xy' as your corrdinates where x is the row and y ic the column LAWS OF PHYSICS APPLY
+      Welcome to the connect_four game !!! to play game, simply connect four moves on the board that will show by playing on the position on the board. Using 'xy' as your corrdinates, where x is the row and y ic the column.
+      LAWS OF PHYSICS APPLY
       GOOD LUCK !!!!!! :)
     HEREDOC
     sleep(2)
