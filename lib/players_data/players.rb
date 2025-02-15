@@ -8,7 +8,7 @@ class Players
 
   def initialize
     @game_players = []
-    @available_colors = %w[red green white orange]
+    @available_colors = %w[red green white blue]
     @chosen_moves = []
   end
 
