@@ -21,7 +21,9 @@ class Game < GameWinner
     show_rules
     loop do
       play_player1
+      board.print_game_board
       play_player2
+      board.print_game_board
     end
   end
 
@@ -29,12 +31,14 @@ class Game < GameWinner
     puts "Enter move #{players_data.game_players[0]}"
     move_icon = players_data.chosen_moves[0]
     @player_one_moves << verify_move(gets.chomp, move_icon)
+    search_win(board.game_board, @player_one_moves) if @player_one_moves.size >= 4
   end
 
   def play_player2
     puts "Enter move #{players_data.game_players[0]}"
     move_icon = players_data.chosen_moves[1]
     @player_two_moves << verify_move(gets.chomp, move_icon)
+    search_win(board.game_board, @player_two_moves) if @player_two_moves.size >= 4
   end
 
   def verify_move(input, move_icon)

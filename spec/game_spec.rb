@@ -117,6 +117,9 @@ RSpec.describe Game do
     end
   end
 
+  let(:board) { double('GameBoard') }
+  let(:game_board) { Array.new(6) { Array.new(7, ' ') } }
+
   describe '#adjust_move' do
     context 'when valid move is on top of empty position' do
       it 'will be adjusted to lowest valid position' do
@@ -126,9 +129,6 @@ RSpec.describe Game do
         expect(result).to eql(adjusted_move)
       end
     end
-
-    let(:board) { double('GameBoard') }
-    let(:game_board) { Array.new(6) { Array.new(7, ' ') } }
 
     context 'when the destination of move is occupied' do
       before do
@@ -143,6 +143,17 @@ RSpec.describe Game do
         adjusted_move = [4, 2]
         result = player_input.adjust_move(input, player_move)
         expect(result).to eql(adjusted_move)
+      end
+    end
+  end
+
+  describe '#updated_move' do
+    context 'when move is successfuly adjuste' do
+      it 'will print the result' do
+        input = '21'
+        message = 'move adjusted from [2, 1] to [5, 1]'
+        expect(player_input).to receive(:puts).with(message)
+        player_input.updated_move(5, 1, input)
       end
     end
   end
