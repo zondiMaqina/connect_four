@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'colorize'
 
 # class for gathering players' data
@@ -14,7 +15,7 @@ class Players
   def receive_players_data
     receive_player1_name
     receive_player2_name
-
+    show_players_details
   end
 
   def receive_player1_name
@@ -48,7 +49,7 @@ class Players
       puts 'Color does not exist or already chosen'
       color = gets.chomp
     end
-    return @available_colors.delete(color)
+    @available_colors.delete(color)
   end
 
   def show_players_details
