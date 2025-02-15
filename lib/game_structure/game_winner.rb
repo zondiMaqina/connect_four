@@ -130,4 +130,14 @@ class GameWinner
     puts "#{move} wins".colorize(:green)
     exit
   end
+
+  def board_full?(board)
+    board.all? do |row|
+      !row.include?(' ')
+    end
+  end
+
+  def game_over
+    puts 'Board is full.... game over Yall both lost :)'.colorize(:red).bold
+  end
 end

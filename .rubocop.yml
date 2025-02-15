@@ -11,7 +11,8 @@
 
 AllCops:
   NewCops: enable
-Metrics/Blocklength:
+
+Metrics/BlockLength:
   Exclude:
     - 'spec/game_winner_spec.rb'
     - 'spec/game_spec.rb'
